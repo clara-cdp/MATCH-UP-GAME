@@ -15,7 +15,7 @@
 
 html {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    background: url('assets/bg3.jpg') top / cover no-repeat;
+    background: url('assets/bg/bg3.jpg') top / cover no-repeat;
 }
 
 body {
@@ -68,7 +68,7 @@ main.container {
     gap: 16px;
     padding: 10px 20px;
     border-radius: 14px;
-   
+
     background: var(--hud-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -182,10 +182,8 @@ main.container {
         padding-left: var(--layout-pad-x);
         padding-right: var(--layout-pad-x);
 
-        --board-size: min(
-            calc(100dvh - 120px),
-            calc(100vw - var(--side-hud-width) - 64px)
-        );
+        --board-size: min(calc(100dvh - 120px),
+                calc(100vw - var(--side-hud-width) - 64px));
         --content-width: min(var(--board-size), 900px);
 
         grid-template-columns: var(--side-hud-width) 1fr;
