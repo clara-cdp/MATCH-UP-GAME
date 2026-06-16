@@ -14,16 +14,40 @@ if (!gameBoard) {
     console.error("Couldn't find the .gameBoard element! Check your HTML class name.");
 }
 
-let backOfCards = [
-    "assets/card1.jpg",
-    "assets/card2.jpg",
-    "assets/card3.jpg",
-    "assets/card4.jpg",
-    "assets/card5.jpg",
-    "assets/card6.jpg",
-    "assets/card7.jpg",
-    "assets/card8.jpg",
+let backOfCards1 = [
+    "assets/cards/card1.jpg",
+    "assets/cards/card2.jpg",
+    "assets/cards/card3.jpg",
+    "assets/cards/card4.jpg",
+    "assets/cards/card5.jpg",
+    "assets/cards/card6.jpg",
+    "assets/cards/card7.jpg",
+    "assets/cards/card8.jpg",
 ]
+
+let backOfCards2 = [
+    "assets/cards/mosaic_1.jpg",
+    "assets/cards/mosaic_2.jpg",
+    "assets/cards/mosaic_3.jpg",
+    "assets/cards/mosaic_4.jpg",
+    "assets/cards/mosaic_5.jpg",
+    "assets/cards/mosaic_6.jpg",
+    "assets/cards/mosaic_7.jpg",
+    "assets/cards/mosaic_8.jpg",
+]
+
+let backOfCards3 = [
+    "assets/cards/dog_1.jpg",
+    "assets/cards/dog_2.jpg",
+    "assets/cards/dog_3.jpg",
+    "assets/cards/dog_4.jpg",
+    "assets/cards/dog_5.jpg",
+    "assets/cards/dog_6.jpg",
+    "assets/cards/dog_7.jpg",
+    "assets/cards/dog_8.jpg",
+]
+
+
 
 let allGameCards = [...backOfCards, ...backOfCards];
 allGameCards.sort(() => Math.random() - 0.5);
