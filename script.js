@@ -14,7 +14,7 @@ if (!gameBoard) {
     console.error("Couldn't find the .gameBoard element! Check your HTML class name.");
 }
 
-let backOfCards1 = [
+let japanCards = [
     "assets/cards/card1.jpg",
     "assets/cards/card2.jpg",
     "assets/cards/card3.jpg",
@@ -25,7 +25,7 @@ let backOfCards1 = [
     "assets/cards/card8.jpg",
 ]
 
-let backOfCards2 = [
+let mosaicCards = [
     "assets/cards/mosaic_1.jpg",
     "assets/cards/mosaic_2.jpg",
     "assets/cards/mosaic_3.jpg",
@@ -36,7 +36,7 @@ let backOfCards2 = [
     "assets/cards/mosaic_8.jpg",
 ]
 
-let backOfCards3 = [
+let dogosCards = [
     "assets/cards/dog_1.jpg",
     "assets/cards/dog_2.jpg",
     "assets/cards/dog_3.jpg",
@@ -47,10 +47,22 @@ let backOfCards3 = [
     "assets/cards/dog_8.jpg",
 ]
 
+const cardSets = { japanCards, mosaicCards, dogosCards }
 
+const urlParams = new URLSearchParams(window.location.search);
+
+const deck = urlParams.get("deck");
+const bg = urlParams.get("bgType");
 
 let allGameCards = [...backOfCards, ...backOfCards];
-allGameCards.sort(() => Math.random() - 0.5);
+
+if (deck && cardSets[deck]) {
+    allGameCards = [...cardSets[deck], ...cardSets[deck]];
+    allGameCards.sort(() => Math.random() - 0.5);
+
+} else {
+    allGameCards.sort(() => Math.random() - 0.5);
+}
 
 
 for (let i = 0; i < cardCount; i++) {
