@@ -3,12 +3,15 @@ let matchedCount = 0;
 let score = 0;
 let matchStartTime = 0;
 let timerInterval;
+let time = 0;
+let timerRunning = false;
+let cardCount = 16;
 
 const scoreDisplay = document.getElementById('scoreBox');
-
-
+const timerDisplay = document.getElementById('seconds');
 const gameBoard = document.querySelector('.gameBoard');
-let cardCount = 16;     // => we could add more cards for a more challenging game.
+const startGameBtn = document.getElementById('startGame');
+
 
 if (!gameBoard) {
     console.error("Couldn't find the .gameBoard element! Check your HTML class name.");
@@ -47,69 +50,75 @@ let dogosCards = [
     "assets/cards/dog_8.jpg",
 ]
 
-const cardSets = { japanCards, mosaicCards, dogosCards }
-
-const urlParams = new URLSearchParams(window.location.search);
-
-const deck = urlParams.get("deck");
-const bg = urlParams.get("bgType");
-
-let allGameCards = [...backOfCards, ...backOfCards];
-
-if (deck && cardSets[deck]) {
-    allGameCards = [...cardSets[deck], ...cardSets[deck]];
-    allGameCards.sort(() => Math.random() - 0.5);
-
-} else {
-    allGameCards.sort(() => Math.random() - 0.5);
+const decks = {
+    japan: japanCards,
+    mosaic: mosaicCards,
+    dogs: dogosCards
 }
 
+let currentDeck = japanCards;
 
-for (let i = 0; i < cardCount; i++) {
+function renderCards(cardSet) {
+    gameBoard.innerHTML = '';
 
-    const card = document.createElement('div');
-    const currentImage = allGameCards[i];
+    flippedCards = [];
+    matchedCount = 0;
+    score = 0;
+    time = 0;
+    timerRunning = false;
 
-    card.classList.add('cards');
+    scoreDisplay.innerText = score;
+    timerDisplay.innerText = '00';
 
-    card.innerHTML = `
-    <div class="cardPosition">
-        <div class="cardFront"></div>
-        <div class="cardBack">
-        <img style="object-fit:cover; "src="${currentImage}" alt="card-icon" ></div>
-    </div>`;
+    clearInterval(timerInterval);
+
+    let allGameCards = [...cardSet, ...cardSet];
+    allGameCards.sort(() => Math.random() - 0.5);
+
+    cardCount = allGameCards.length;
 
 
+    for (let i = 0; i < cardCount; i++) {
 
-    card.addEventListener('click', function () {
+        const card = document.createElement('div');
+        const currentImage = allGameCards[i];
 
-        if (!timerRunning) {
-            startTimer();
-            timerRunning = true;
-            matchStartTime = time;
-        }
+        card.classList.add('cards');
 
-        if (this.classList.contains('flipped') || flippedCards.length === 2) {
-            return;
-        }
+        card.innerHTML = `
+            <div class="cardPosition">
+                <div class="cardFront"></div>
+                <div class="cardBack">
+                <img style="object-fit:cover; "src="${currentImage}" alt="card-icon" ></div>
+            </div>`;
 
-        this.classList.add('flipped');
-        flippedCards.push(this);
-
-        if (flippedCards.length === 2) {
-            checkIfCardsMatch()
-        }
-    });
-    gameBoard.appendChild(card);
+        card.addEventListener('click', cardClicked);
+        gameBoard.appendChild(card);
+    }
 }
 
+// card handler
+function cardClicked() {
+
+    if (!timerRunning) {
+        startTimer();
+        timerRunning = true;
+        matchStartTime = time;
+    }
+
+    if (this.classList.contains('flipped') || flippedCards.length === 2) {
+        return;
+    }
+
+    this.classList.add('flipped');
+    flippedCards.push(this);
+
+    if (flippedCards.length === 2) {
+        checkIfCardsMatch()
+    }
+}
 
 // timer
-
-let time = 0;
-let timerRunning = false;
-const timerDisplay = document.getElementById('seconds');
-
 function startTimer() {
 
     if (timerInterval) clearInterval(timerInterval);
@@ -121,6 +130,7 @@ function startTimer() {
 
 }
 
+// maching game
 
 function checkIfCardsMatch() {
 
@@ -157,6 +167,8 @@ function checkIfCardsMatch() {
 
 }
 
+//points calculator
+
 function calculatePoints(seconds) {
     switch (true) {
         case (seconds <= 3):
@@ -172,8 +184,21 @@ function calculatePoints(seconds) {
     }
 }
 
+// deck selection
+document.querySelectorAll('input[name="deck"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+        currentDeck = decks[this.value];
+        renderCards(currentDeck);
+    });
+});
 
 
+// START 
+startGameBtn.addEventListener('click', () => {
+    renderCards(currentDeck);
+});
+
+renderCards(currentDeck);
 
 
 
