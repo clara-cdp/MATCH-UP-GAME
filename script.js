@@ -192,6 +192,24 @@ document.querySelectorAll('input[name="deck"]').forEach(radio => {
     });
 });
 
+// background selection
+const backgroundImages = {
+    bg1: 'assets/bg/bg.jpg',
+    bg2: 'assets/bg/bg2.jpg',
+    bg3: 'assets/bg/bg3.jpg',
+    bg4: 'assets/bg/bg4.jpg',
+    bg5: 'assets/bg/bg5.jpg'
+};
+
+document.querySelectorAll('input[name="bgType"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+        const bgUrl = backgroundImages[this.value];
+        if (bgUrl) {
+            document.documentElement.style.backgroundImage = `url('${bgUrl}')`;
+        }
+    });
+});
+
 
 // START 
 startGameBtn.addEventListener('click', () => {
