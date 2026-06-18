@@ -14,8 +14,8 @@
     </head>
 
     <body class="antialiased min-h-dvh overflow-x-hidden flex flex-col">
-        <header class="mx-auto grid w-[var(--content-width)] grid-cols-[1fr_auto] items-center gap-4 pt-[clamp(22px,4dvh,48px)] lg:w-[var(--layout-width)]">
-            <h1 class="justify-self-start text-[clamp(3.25rem,12vw,5.5rem)] lg:text-[clamp(4.5rem,7vw,8rem)]">MATCH UP!</h1>
+        <header class="mx-auto grid w-[var(--content-width)] grid-cols-[minmax(0,1fr)_auto] items-center gap-3 pt-[clamp(22px,4dvh,48px)] lg:w-[var(--layout-width)] lg:gap-4">
+            <h1 class="min-w-0 justify-self-start whitespace-nowrap text-[clamp(2rem,8.5vw,4.8rem)] lg:text-[clamp(3.5rem,6vw,6.25rem)]">MATCH UP!</h1>
             <button id="startGame">Start</button>
         </header>
         <main class="grid w-full justify-center px-[var(--page-pad)] pb-4 pt-2 lg:grid-cols-[var(--side-hud-width)_var(--content-width)] lg:gap-x-[var(--layout-gap)]">
