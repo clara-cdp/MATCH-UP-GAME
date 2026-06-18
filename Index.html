@@ -4,6 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
         <link rel=stylesheet href='styles.css'>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,50 +13,50 @@
         <title>MATCH UP!</title>
     </head>
 
-    <body>
-        <header>
-            <h1>MATCH UP!</h1>
+    <body class="antialiased min-h-dvh overflow-x-hidden flex flex-col">
+        <header class="mx-auto grid w-[var(--content-width)] grid-cols-[1fr_auto] items-center gap-4 pt-[clamp(22px,4dvh,48px)] lg:w-[var(--layout-width)]">
+            <h1 class="justify-self-start text-[clamp(3.25rem,12vw,5.5rem)] lg:text-[clamp(4.5rem,7vw,8rem)]">MATCH UP!</h1>
             <button id="startGame">Start</button>
         </header>
-        <main class="container">
-            <div class="hud">
+        <main class="grid w-full justify-center px-[var(--page-pad)] pb-4 pt-2 lg:grid-cols-[var(--side-hud-width)_var(--content-width)] lg:gap-x-[var(--layout-gap)]">
+            <div class="hud grid w-[var(--content-width)] max-w-full grid-cols-[auto_auto] items-center justify-center gap-x-[18px] gap-y-2 px-4 py-2.5 lg:m-0 lg:flex lg:h-[var(--content-width)] lg:w-[var(--side-hud-width)] lg:flex-col lg:items-stretch lg:justify-start lg:gap-2.5 lg:self-start lg:p-3.5">
                 <div class="score">score <span id="scoreBox">0</span></div>
                 <div class="timer">Time <span id="seconds">00</span></div>
-                <div>
+                <div class="controls grid w-full max-w-[660px] grid-cols-[auto_minmax(0,1fr)] items-center gap-x-3 gap-y-1.5 justify-self-center lg:block lg:max-w-none">
                     <h3>decks</h3>
-                    <div>
+                    <div class="flex flex-wrap items-center gap-x-1 gap-y-1 lg:block">
                         <input type="radio" value="japan" name="deck" id="deck-japan" checked>
-                        <label for="deck-japan">Japan</label><br>
+                        <label for="deck-japan">Japan</label>
 
                         <input type="radio" value="mosaic" name="deck" id="deck-mosaic">
-                        <label for="deck-mosaic">Mosaics</label><br>
+                        <label for="deck-mosaic">Mosaics</label>
 
                         <input type="radio" value="dogs" name="deck" id="deck-dogs">
-                        <label for="deck-dogs">Dogs</label><br>
+                        <label for="deck-dogs">Dogs</label>
                     </div>
-                    <h3>Backgrounds</h3>
+                    <h3 class="lg:mt-3">Backgrounds</h3>
 
-                    <div>
+                    <div class="flex flex-wrap items-center gap-x-1 gap-y-1 lg:block">
                         <input type="radio" value="bg1" name="bgType" id="bg1">
-                        <label for="bg1">Mt Fuji</label><br>
+                        <label for="bg1">Mt Fuji</label>
 
                         <input type="radio" value="bg2" name="bgType" id="bg2">
-                        <label for="bg2">Neon</label><br>
+                        <label for="bg2">Neon</label>
 
                         <input type="radio" value="bg3" name="bgType" id="bg3" checked>
-                        <label for="bg3">Field</label><br>
+                        <label for="bg3">Field</label>
 
                         <input type="radio" value="bg4" name="bgType" id="bg4">
-                        <label for="bg4">Teal</label><br>
+                        <label for="bg4">Teal</label>
 
                         <input type="radio" value="bg5" name="bgType" id="bg5">
-                        <label for="bg5">Koy</label><br>
+                        <label for="bg5">Koy</label>
                     </div>
                 </div>
             </div>
 
 
-            <div class='gameBoard'>
+            <div class='gameBoard lg:m-0'>
 
                 <!-- create cards in javaSccript-->
 
