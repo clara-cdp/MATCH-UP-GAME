@@ -1,25 +1,29 @@
 # MATCH UP! 🎴
 
-A premium, responsive, and dynamic card matching memory game built with a modern glassmorphic interface. Challenge your memory and speed across multiple card decks and custom visual backdrops.
+Your Classic card matching memory game.
+Challenge your memory and speed across multiple card decks and custom visual backdrops.
 
 ## ✨ Features
 
-- **Dynamic Card Decks:** Toggle between different card themes on the fly:
+- **Dynamic Card Decks:**  
+- Toggle between different card themes on the fly:
   - 🗼 **Japan** (Scenic and cultural cards)
   - 🎨 **Mosaics** (Intricate geometric patterns)
   - 🐶 **Dogs** (Adorable canine companions)
-- **Custom Background Selector:** Switch the application backdrop instantly to suit your preference:
+- **Custom Background Selector:**  
+- Switch the application backdrop instantly to suit your preference:
   - 🌋 Mt Fuji
   - 🌌 Neon
   - 🌾 Field
   - 🌊 Teal
   - 🎏 Koy
-- **Premium Glassmorphic Design:** Renders a sleek, high-fidelity user interface utilizing frosted glass panels, vibrant linear gradients, and interactive hover scales.
-- **Smart Scoring System:** Points are dynamically calculated based on how quickly you make successful matches:
+
+## 🎯 **Smart Scoring System:**   
+Points are dynamically calculated based on how quickly you make successful matches. What's your best?
 
   - *Incorrect matches incur a penalty.
 
-- **Responsive Layout:** Automatically scales elements to maximize screen real estate and prevent scrolling on desktop, tablet, and mobile devices.
+- **Responsive Layout:** Play anywhere: desktop, tablet, and mobile devices.
 
 ---
 
