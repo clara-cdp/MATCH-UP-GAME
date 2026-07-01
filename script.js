@@ -59,6 +59,9 @@ const decks = {
 let currentDeck = japanCards;
 
 function renderCards(cardSet) {
+    if (typeof hideWinModal === 'function') {
+        hideWinModal();
+    }
     gameBoard.innerHTML = '';
 
     flippedCards = [];
@@ -151,7 +154,7 @@ function checkIfCardsMatch() {
 
         if (matchedCount === cardCount) {
             clearInterval(timerInterval);
-            setTimeout(() => alert(`You WON! Final Score: ${score}`), 600);
+            setTimeout(() => showWinModal(score, time), 600);
         }
     } else {
         score = Math.max(0, score - 15);
@@ -210,6 +213,159 @@ document.querySelectorAll('input[name="bgType"]').forEach(radio => {
     });
 });
 
+
+// ==========================================
+// WIN MODAL & CONFETTI SYSTEM
+// ==========================================
+const winModal = document.getElementById('winModal');
+const modalScore = document.getElementById('modalScore');
+const modalTime = document.getElementById('modalTime');
+const modalPlayAgain = document.getElementById('modalPlayAgain');
+const confettiCanvas = document.getElementById('confettiCanvas');
+const confettiCtx = confettiCanvas ? confettiCanvas.getContext('2d') : null;
+
+let confettiActive = false;
+let confettiParticles = [];
+let confettiAnimationId;
+
+// Game theme colors matching UI palette
+const confettiColors = [
+    '#ff3d7f', // --accent (pink)
+    '#1dd6d0', // --accent-2 (teal)
+    '#ffd447', // --accent-3 (yellow)
+    '#ffffff', // White
+    '#ff8a3d'  // Orange (from start button gradient)
+];
+
+class ConfettiParticle {
+    constructor() {
+        this.reset();
+        // Distribute initially so it starts mid-air or cascades down
+        if (confettiCanvas) {
+            this.y = Math.random() * -confettiCanvas.height;
+        }
+    }
+
+    reset() {
+        if (!confettiCanvas) return;
+        this.x = Math.random() * confettiCanvas.width;
+        this.y = Math.random() * -50 - 20;
+        this.width = Math.random() * 8 + 6;
+        this.height = Math.random() * 12 + 8;
+        this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+        this.vx = Math.random() * 4 - 2;
+        this.vy = Math.random() * 3 + 2; // fall speed range
+        this.rotation = Math.random() * 360;
+        this.rotationSpeed = Math.random() * 5 - 2.5;
+        this.wobble = Math.random() * 10;
+        this.wobbleSpeed = Math.random() * 0.05 + 0.02;
+    }
+
+    update() {
+        if (!confettiCanvas) return;
+        this.x += this.vx + Math.sin(this.wobble) * 0.5;
+        this.y += this.vy;
+        this.rotation += this.rotationSpeed;
+        this.wobble += this.wobbleSpeed;
+
+        // Reset if it goes off bottom or sides
+        if (this.y > confettiCanvas.height + 20) {
+            this.reset();
+        }
+        if (this.x < -20) {
+            this.x = confettiCanvas.width + 10;
+        } else if (this.x > confettiCanvas.width + 20) {
+            this.x = -10;
+        }
+    }
+
+    draw() {
+        if (!confettiCtx) return;
+        confettiCtx.save();
+        confettiCtx.translate(this.x + this.width / 2, this.y + this.height / 2);
+        confettiCtx.rotate((this.rotation * Math.PI) / 180);
+        
+        // 3D paper flipping effect
+        const scaleX = Math.cos(this.wobble);
+        confettiCtx.scale(scaleX, 1);
+        
+        confettiCtx.fillStyle = this.color;
+        confettiCtx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+        confettiCtx.restore();
+    }
+}
+
+function resizeConfettiCanvas() {
+    if (!confettiCanvas || !winModal) return;
+    confettiCanvas.width = window.innerWidth;
+    confettiCanvas.height = window.innerHeight;
+}
+
+function initConfetti() {
+    resizeConfettiCanvas();
+    confettiParticles = [];
+    const count = 125;
+    for (let i = 0; i < count; i++) {
+        confettiParticles.push(new ConfettiParticle());
+    }
+}
+
+function animateConfetti() {
+    if (!confettiActive || !confettiCtx || !confettiCanvas) return;
+    confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+
+    confettiParticles.forEach(particle => {
+        particle.update();
+        particle.draw();
+    });
+
+    confettiAnimationId = requestAnimationFrame(animateConfetti);
+}
+
+function startConfetti() {
+    if (!confettiCanvas) return;
+    confettiActive = true;
+    initConfetti();
+    animateConfetti();
+    window.addEventListener('resize', resizeConfettiCanvas);
+}
+
+function stopConfetti() {
+    confettiActive = false;
+    cancelAnimationFrame(confettiAnimationId);
+    window.removeEventListener('resize', resizeConfettiCanvas);
+    if (confettiCtx && confettiCanvas) {
+        confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    }
+}
+
+function showWinModal(finalScore, totalTime) {
+    if (modalScore) modalScore.innerText = finalScore;
+    if (modalTime) modalTime.innerText = `${totalTime}s`;
+    if (winModal) winModal.classList.add('active');
+    startConfetti();
+}
+
+function hideWinModal() {
+    if (winModal) winModal.classList.remove('active');
+    stopConfetti();
+}
+
+// Modal event listeners
+if (modalPlayAgain) {
+    modalPlayAgain.addEventListener('click', () => {
+        renderCards(currentDeck);
+    });
+}
+
+// Also close modal if clicking outside the modal content box (on the overlay)
+if (winModal) {
+    winModal.addEventListener('click', (e) => {
+        if (e.target === winModal) {
+            hideWinModal();
+        }
+    });
+}
 
 // START 
 startGameBtn.addEventListener('click', () => {

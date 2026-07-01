@@ -62,6 +62,30 @@
 
             </div>
         </main>
+
+        <!-- Win Modal Overlay -->
+        <div id="winModal" class="modal-overlay">
+            <canvas id="confettiCanvas"></canvas>
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h2 class="modal-title">VICTORY!</h2>
+                    <p class="modal-text">You completed the deck in style!</p>
+                    <div class="modal-stats">
+                        <div class="modal-stat-box">
+                            <span class="stat-label">Final Score</span>
+                            <span id="modalScore" class="stat-value">0</span>
+                        </div>
+                        <div class="modal-stat-box">
+                            <span class="stat-label">Total Time</span>
+                            <span id="modalTime" class="stat-value">0s</span>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button id="modalPlayAgain">Play Again</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
     <script src="script.js" defer></script>
 
